@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
 	    baseConvert(decimalNum, 8);
 	    break;
     }
-
     return 0;
 }
 
+// Takes input in hex, oct, or binary (one char at a time) and returns decimal form
 int convertToDecimal(int base)
 {
     char digit;
@@ -93,6 +93,7 @@ int convertToDecimal(int base)
     return decimalNum;
 }
 
+//Takes decimal int and converts to binary, oct, or hex. Prints the result.
 void baseConvert(int number, int base)
 {
     int nearestPower = findNearestPower(number, base);
@@ -126,6 +127,13 @@ void baseConvert(int number, int base)
     cout << "\n";
 }
 
+/*
+ * Returns the closest multiple of a base below a given number. Needed to print
+ * out the converted number HO first.
+ * EX: 
+ *     (64, 2) -> 64
+ *     (270, 16) -> 256
+ */ 
 int findNearestPower(int number, int base)
 {
     int power = 1;
