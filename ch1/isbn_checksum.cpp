@@ -3,7 +3,7 @@
 *
 * Author: Patrick Rummage (patrickbrummage@gmail.com)
 *
-* Calculates checksum to validate a 13 digit ISBN number.
+* Calculates checksum to validate a 10 or 13 digit ISBN number.
 */
 #include <iostream>
 using std::cin;
@@ -32,7 +32,12 @@ int main(int argc, char *argv[])
 		digit = cin.get();
 		digitCount++;
 	}
-
+	//fix to convert 10 digit (pre 2007) number to 13 digit number
+	//standard prefix is 978. (9 + 14 + 8 = 31)
+	if (digitCount == 10)
+	{
+		checksum += 31;
+	}
 	//validate checksum
 	cout << "Checksum is: " << checksum << ".\n";
 	if (checksum % 10 == 0)
