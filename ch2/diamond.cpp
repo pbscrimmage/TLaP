@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 		    }
 		    else outputChar = ' ';
 
-			cout << outputChar;
+		    cout << outputChar;
 		}
 		cout << "\n";
 	}
