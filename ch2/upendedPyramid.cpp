@@ -14,23 +14,23 @@ using std::cout;
 
 int main(int argc, char *argv[])
 {
-	char outputChar;
-	for (int row = 1, spaces = 0; row <= 4; row++, spaces++)
+    char outputChar;
+    for (int row = 1, spaces = 0; row <= 4; row++, spaces++)
+    {
+	for (int position = 1; position <= 8 - spaces; position++)
 	{
-		for (int position = 1; position <= 8 - spaces; position++)
-		{
-		    if (position > spaces)
-		    {
-		    	outputChar = '#';
-		    }
-		    else outputChar = ' ';
+	    if (position > spaces)
+	    {
+	    	outputChar = '#';
+	    }
+	    else outputChar = ' ';
 
-			cout << outputChar;
-		}
-		cout << "\n";
+	    cout << outputChar;
 	}
-	cout << "Press any key to exit: ";
-	cin.get();
+	cout << "\n";
+    }
+    cout << "Press any key to exit: ";
+    cin.get();
 
-	return 0;
+    return 0;
 }

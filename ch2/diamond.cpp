@@ -19,22 +19,22 @@ using std::cout;
 
 int main(int argc, char *argv[])
 {
-	char outputChar;
-	for (int row = 1, spaces = 3; row <= 8; row++, spaces = abs(4 - row))
+    char outputChar;
+    for (int row = 1, spaces = 3; row <= 8; row++, spaces = abs(4 - row))
+    {
+        for (int position = 1; position <= 8 - spaces; position++)
 	{
-		for (int position = 1; position <= 8 - spaces; position++)
-		{
-		    if (position > spaces)
-		    {
-		    	outputChar = '#';
-		    }
-		    else outputChar = ' ';
+	    if (position > spaces)
+	    {
+	        outputChar = '#';
+	    }
+	    else outputChar = ' ';
 
-		    cout << outputChar;
-		}
-		cout << "\n";
+	    cout << outputChar;
 	}
-	cout << "Press any key to exit: ";
-	cin.get();
-	return 0;
+    cout << "\n";
+    }
+    cout << "Press any key to exit: ";
+    cin.get();
+    return 0;
 }
