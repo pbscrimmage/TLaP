@@ -106,17 +106,12 @@ void baseConvert(int number, int base)
 	if (subtract >= 0)
 	{
 	    nextChar = (number / nearestPower) % base;
-            switch(nextChar)
+	    if (nextChar >= 10) //handle hex chars
 	    {
-	        case 10: outputChar = 'A'; break;
-		case 11: outputChar = 'B'; break;
-		case 12: outputChar = 'C'; break;
-		case 13: outputChar = 'D'; break;
-		case 14: outputChar = 'E'; break;
-		case 15: outputChar = 'F'; break;
-		default:
-		    outputChar = nextChar + '0';
+ 	        outputChar = nextChar + 55;		    
 	    }
+	    else  outputChar = nextChar + '0';
+
 	    number = subtract;
 	    nearestPower /= base;
         }
