@@ -1,7 +1,9 @@
 /**
 * diamond.cpp
 *
-* Prints out a diamond shape in hashes
+* Objective:
+*       Print out a diamond shape in hashes using two output
+*       statements.
 *
 * 	    ##
 * 	   ####
@@ -34,7 +36,5 @@ int main(int argc, char *argv[])
 	}
     cout << "\n";
     }
-    cout << "Press any key to exit: ";
-    cin.get();
     return 0;
 }

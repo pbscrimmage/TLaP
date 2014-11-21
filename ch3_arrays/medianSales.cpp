@@ -3,8 +3,9 @@
  *
  * Author: Patrick Rummage (patrickbrummage@gmail.com)
  *
- * Uses a two-dimensional array of sales data to identify the sales agent 
- * with the highest median sales figure in a year.
+ * Objective:
+ *      Use a two-dimensional array of sales data to identify the sales agent 
+ *      with the highest median sales figure in a year.
  */
 #include <cstdlib>
 #include <iostream>
@@ -53,7 +54,5 @@ int main(int argc, char *argv[])
     cout << "Agent " << bestAgent << " had best median sales: " <<
        highestMedian << "\n"; 
     
-    cout << "Press any key to exit: ";
-    cin.get();
     return 0;
 }

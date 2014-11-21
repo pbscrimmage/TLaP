@@ -3,8 +3,9 @@
 *
 * Author: Patrick Rummage (patrickbrummage@gmail.com)
 *
-* Takes a positive number in decimal, binary, hex, or octal form and 
-* converts the number to the other 3 forms.
+* Objective: 
+*       Take a positive number in decimal, binary, hex, or octal form and 
+*       convert the number to the other 3 forms.
 */
 #include <iostream>
 using std::cin;

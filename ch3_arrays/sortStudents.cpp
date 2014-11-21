@@ -3,8 +3,9 @@
  *
  * Author: Patrick Rummage (patrickbrummage@gmail.com)
  *
- * Uses qsort to sort an array of student data structures. First sorts by
- * the grade attribute, then by the student ID number.
+ * Objective:
+ *      Use qsort to sort an array of student data structures. Sort first by
+ *      the grade field, then by the student ID field.
  */
 #include <cstdlib>
 #include <iostream>
@@ -67,7 +68,5 @@ int main (void)
     }
     cout << "\n";
 
-    cout << "Press any key to exit: ";
-    cin.get();
     return 0;
 }

@@ -1,7 +1,9 @@
 /*
 * Upsidedown_pyramid.cpp
 * 
-* Prints out an upside down pyramid shape in hashes
+* Objective:
+*       Print out an upside down pyramid shape in hashes using
+*       two output statements.
 * 
 * 	########
 * 	 ######
@@ -29,8 +31,5 @@ int main(int argc, char *argv[])
 	}
 	cout << "\n";
     }
-    cout << "Press any key to exit: ";
-    cin.get();
-
     return 0;
 }
