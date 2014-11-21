@@ -42,19 +42,15 @@ int main(int argc, char *argv[])
         char cipherChar;
         for (int i = 0; i < textLength; i++)
         {
+            char letter = toupper(message[i]);
             //capital letters
-            if (message[i] >= 'A' && message[i] <= 'Z')
+            if (letter >= 'A' && letter <= 'Z')
             {
-                cipherChar = CIPHER_CHARS[ message[i] - 'A' ];
-            }
-            //lowercase letters
-            if (message[i] >= 'a' && message[i] <= 'z')
-            {
-                cipherChar = CIPHER_CHARS[ message[i] - 'a' ];
+                cipherChar = CIPHER_CHARS[ letter - 'A' ];
             }
             //punctuation
             else
-                cipherChar = message[i];
+                cipherChar = letter;
 
             cout << cipherChar;
         }
@@ -66,8 +62,8 @@ int main(int argc, char *argv[])
         char plainChar;
         for (int i = 0; i < textLength; i++)
         {
-            //letters
             char letter = toupper(message[i]);
+            //letters
             if (letter >= 'A' && letter <= 'Z')
             {
                 int charPosition = findChar(letter);
@@ -75,7 +71,7 @@ int main(int argc, char *argv[])
             }
             //punctuation
             else
-                plainChar = message[i];
+                plainChar = letter;
 
             cout << plainChar;
         }
