@@ -34,8 +34,9 @@ double findMedian(int intArray[], int ARRAY_SIZE)
     qsort(intArray, ARRAY_SIZE, sizeof(int), compare);
     int middle = ARRAY_SIZE / 2;
     
-    //arrays all have even # of elements (12). average the two middle numbers     
-    return (intArray[middle - 1] + intArray[middle]) / 2;        
+    //arrays all have even # of elements (12), so average the two middle numbers
+    //add 0.5 to round    
+    return ((intArray[middle - 1] + intArray[middle]) / 2) + 0.5;       
 }
 
 int main(int argc, char *argv[])
