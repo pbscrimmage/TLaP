@@ -5,8 +5,8 @@
  *
  * Objective:
  *      Implement a string type that stores its length at location[0]. 
- *      Create functions to append, concatenate, and locate characters
- *      within strings of this type.
+ *      Define functions to append, concatenate, create substrings, and 
+ *      retrieve characters from strings of this type.
  */
 #include <iostream>
 using std::cin;
@@ -38,6 +38,17 @@ void concatenate(lengthString &s1, lengthString s2)
     s1[0] = s1_newLength;
 }
 
+lengthString substring(lengthString s, int position, int length)
+{
+    lengthString sub = new char[length + 1];
+    sub[0] = length;
+    for (int i = 1; i <= length; i++)
+    {
+        sub[i] = s[position + i];
+    }
+    return sub;
+}
+
 void output(lengthString s)
 {
     int length = s[0];
@@ -50,6 +61,7 @@ void output(lengthString s)
 
 int main(int argc, char *argv[])
 {
+    //Test append()
     lengthString input1 = new char[0];
     cout << "Enter a string: ";
     char inputChar = cin.get();
@@ -59,7 +71,8 @@ int main(int argc, char *argv[])
         inputChar = cin.get(); 
     }
     output(input1);
-    
+
+    //Test concatenate()
     lengthString input2 = new char[0];
     cout << "Enter another string: ";
     inputChar = cin.get();
@@ -70,6 +83,10 @@ int main(int argc, char *argv[])
     }
     concatenate(input1, input2);
     output(input1);
+
+    //Test substring()
+    lengthString subString = substring(input1, 3, 4);
+    output(subString);
     
     return 0;
 }
