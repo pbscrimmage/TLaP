@@ -30,12 +30,19 @@ void concatenate(lengthString &s1, lengthString s2)
 {
     int s1_length = s1[0];
     int s2_length = s2[0];
-    int s1_newLength = s1_length + s2_length;
+    int newLength = s1_length + s2_length;
+    lengthString newS = new char[newLength + 1];
+    newS[0] = newLength;
+    for (int i = 1; i <= s1_length; i++)
+    {
+        newS[i] = s1[1];
+    }
     for (int i = 1; i <= s2_length; i++)
     {
         s1[s1_length + i] = s2[i];
     }
-    s1[0] = s1_newLength;
+    delete[] s1;
+    s1 = newS;
 }
 
 lengthString substring(lengthString s, int position, int length)
@@ -48,7 +55,43 @@ lengthString substring(lengthString s, int position, int length)
     }
     return sub;
 }
+//BROKEN!!
+void replaceString(lengthString &s, lengthString target, lengthString replaceText)
+{
+    int s_length = s[0];
+    int target_length = target[0];
+    int replace_length = replaceText[0];
+    int matchPosition = 0;
+    for (int pos = 1; pos <= s_length; pos++)
+    {
+        if (s[pos] == target[1])
+        {
+            matchPosition = s[pos];
+        }
+    }
+    if (matchPosition > 0)
+    {
+        lengthString matchString = substring(s, matchPosition, target_length);
+        if (matchString == target)
+        {
+            for (int i = 1; i <= replace_length; i++)
+            {
+                s[matchPosition + i] = replaceText[i];
+            }
+        }
+    }
+}
 
+void input(lengthString &s)
+{
+
+    char inputChar = cin.get();
+    while (inputChar != 10)
+    {
+        append(s, inputChar);
+        inputChar = cin.get(); 
+    }
+}
 void output(lengthString s)
 {
     int length = s[0];
@@ -62,31 +105,31 @@ void output(lengthString s)
 int main(int argc, char *argv[])
 {
     //Test append()
-    lengthString input1 = new char[0];
+    lengthString string1 = new char[0];
     cout << "Enter a string: ";
-    char inputChar = cin.get();
-    while (inputChar != 10)
-    {
-        append(input1, inputChar);
-        inputChar = cin.get(); 
-    }
-    output(input1);
+    input(string1);
+    output(string1);
 
     //Test concatenate()
-    lengthString input2 = new char[0];
+    lengthString string2 = new char[0];
     cout << "Enter another string: ";
-    inputChar = cin.get();
-    while (inputChar != 10)
-    {
-        append(input2, inputChar);
-        inputChar = cin.get(); 
-    }
-    concatenate(input1, input2);
-    output(input1);
+    input(string2);
+    concatenate(string1, string2);
+    output(string1);
 
     //Test substring()
-    lengthString subString = substring(input1, 3, 4);
+    lengthString subString = substring(string1, 3, 4);
     output(subString);
+
+    //Test replaceString
+    lengthString find = new char[0];
+    lengthString replace = new char[0];
+    cout << "Enter a string to find: ";
+    input(find);
+    cout << "Replace with: ";
+    input(replace);
+    replaceString(string1, find, replace);
+    output(string1);
     
     return 0;
 }
