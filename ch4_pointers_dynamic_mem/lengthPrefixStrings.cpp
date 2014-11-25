@@ -35,14 +35,27 @@ void concatenate(lengthString &s1, lengthString s2)
     newS[0] = newLength;
     for (int i = 1; i <= s1_length; i++)
     {
-        newS[i] = s1[1];
+        newS[i] = s1[i];
     }
     for (int i = 1; i <= s2_length; i++)
     {
-        s1[s1_length + i] = s2[i];
+        newS[s1_length + i] = s2[i];
     }
     delete[] s1;
     s1 = newS;
+}
+
+bool stringEqual(lengthString s1, lengthString s2)
+{
+    int s_length = s1[0];
+    for (int i = 1; i < s_length; i++)
+    {
+        if (s1[i] != s2[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 lengthString substring(lengthString s, int position, int length)
@@ -59,27 +72,24 @@ lengthString substring(lengthString s, int position, int length)
 void replaceString(lengthString &s, lengthString target, lengthString replaceText)
 {
     int s_length = s[0];
-    int target_length = target[0];
-    int replace_length = replaceText[0];
-    int matchPosition = 0;
-    for (int pos = 1; pos <= s_length; pos++)
+    int targetLength = target[0];
+    int replaceLength = replaceText[0];
+    lengthString newS = new char[s_length + 1];
+    for (int i = 1; i < s_length; i++)
     {
-        if (s[pos] == target[1])
+        if (s[i] == target[1])
         {
-            matchPosition = s[pos];
-        }
-    }
-    if (matchPosition > 0)
-    {
-        lengthString matchString = substring(s, matchPosition, target_length);
-        if (matchString == target)
-        {
-            for (int i = 1; i <= replace_length; i++)
+            if (stringEqual( substring(s, i, targetLength), target))
             {
-                s[matchPosition + i] = replaceText[i];
+                concatenate(newS, substring(s, 1, i));
+                concatenate(newS, replaceText);
+                concatenate(newS, substring(s, i + replaceLength, s_length));
             }
         }
+        else concatenate(newS, s);
     }
+    delete[] s;
+    s = newS;
 }
 
 void input(lengthString &s)
@@ -114,6 +124,7 @@ int main(int argc, char *argv[])
     lengthString string2 = new char[0];
     cout << "Enter another string: ";
     input(string2);
+    output(string2);
     concatenate(string1, string2);
     output(string1);
 
