@@ -2,8 +2,8 @@
 * diamond.cpp
 *
 * Objective:
-*       Print out a diamond shape in hashes using two output
-*       statements.
+*       Print out a diamond shape in hashes using one output
+*       statement each for hashes, spaces, and newlines.
 *
 * 	    ##
 * 	   ####
