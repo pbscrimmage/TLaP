@@ -3,7 +3,7 @@
 * 
 * Objective:
 *       Print out an upside down pyramid shape in hashes using
-*       two output statements.
+*       one output statement each for hashes, spaces, and newlines.
 * 
 * 	########
 * 	 ######
@@ -23,11 +23,9 @@ int main(int argc, char *argv[])
 	{
 	    if (position > spaces)
 	    {
-	    	outputChar = '#';
+	    	cout << '#';
 	    }
-	    else outputChar = ' ';
-
-	    cout << outputChar;
+	    else cout << ' ';
 	}
 	cout << "\n";
     }
