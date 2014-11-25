@@ -19,21 +19,24 @@
 using std::cin;
 using std::cout;
 
+const int NUM_ROWS = 8;
+
 int main(int argc, char *argv[])
 {
-    char outputChar;
-    for (int row = 1, spaces = 3; row <= 8; row++, spaces = abs(4 - row))
+    int numSpaces;
+    int rowLength;
+    for (int row = 1; row <= NUM_ROWS; row++)
     {
-        for (int position = 1; position <= 8 - spaces; position++)
-	{
-	    if (position > spaces)
-	    {
-	        outputChar = '#';
-	    }
-	    else outputChar = ' ';
-
-	    cout << outputChar;
-	}
+        numSpaces = (int)abs(4.5 - row);
+        rowLength = NUM_ROWS - numSpaces;
+        for (int position = 1; position <= rowLength; position++)
+        {
+            if (position <= numSpaces)
+            {
+                cout << " ";
+            }
+            else cout << "#";
+        }
     cout << "\n";
     }
     return 0;
