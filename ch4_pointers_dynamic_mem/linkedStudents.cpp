@@ -38,13 +38,14 @@ int main(int argc, char *argv[])
     node3->next = NULL;
     node1 = node2 = node3 = NULL;
     
-    /*Test removeRecord();*/
+    /*Test removeRecord()*/
     removeRecord(sc, 1001);
     listNode *loopPtr = sc;
     while (loopPtr != NULL) {
         cout << loopPtr->studentNum << "\n";
         loopPtr = loopPtr->next;
     }
+    return 0;
 }
 
 /*Creates new student node at beginning of studentCollection*/
