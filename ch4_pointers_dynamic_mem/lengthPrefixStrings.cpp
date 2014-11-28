@@ -62,9 +62,9 @@ lengthString substring(lengthString s, int position, int length)
 {
     lengthString sub = new char[length + 1];
     sub[0] = length;
-    for (int i = 1; i <= length; i++)
+    for (int i = 0; i < length; i++)
     {
-        sub[i] = s[position + i];
+        sub[1 + i] = s[position + i];
     }
     return sub;
 }
@@ -74,20 +74,27 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
     int s_length = s[0];
     int targetLength = target[0];
     int replaceLength = replaceText[0];
-    lengthString newS = new char[s_length + 1];
+    int newLength = s_length + 1 + (replaceLength - targetLength);
+    lengthString newS = new char[newLength];
+    bool match = false;
     for (int i = 1; i < s_length; i++)
     {
         if (s[i] == target[1])
         {
-            if (stringEqual( substring(s, i, targetLength), target))
+            cout << "first char match" << "\n";
+            if (stringEqual(substring(s, i, targetLength), target))
             {
-                concatenate(newS, substring(s, 1, i));
+                match = true;
+                cout << "Target match" << "\n";
+                concatenate(newS, substring(s, 1, i - 1));
                 concatenate(newS, replaceText);
-                concatenate(newS, substring(s, i + replaceLength, s_length));
+                concatenate(newS, substring(s, i + targetLength, s_length));
+                break;
             }
         }
-        else concatenate(newS, s);
     }
+    if (!match)
+        concatenate(newS, s);
     delete[] s;
     s = newS;
 }
@@ -115,12 +122,14 @@ void output(lengthString s)
 int main(int argc, char *argv[])
 {
     //Test append()
+    cout << "TESTING append\n";
     lengthString string1 = new char[0];
     cout << "Enter a string: ";
     input(string1);
     output(string1);
 
     //Test concatenate()
+    cout << "**TESTING concatenate**\n";
     lengthString string2 = new char[0];
     cout << "Enter another string: ";
     input(string2);
@@ -129,10 +138,12 @@ int main(int argc, char *argv[])
     output(string1);
 
     //Test substring()
+    cout << "**TESTING subString**\n";
     lengthString subString = substring(string1, 3, 4);
     output(subString);
 
-    //Test replaceString
+    //Test replaceString()
+    cout << "**TESTING replaceString**\n";
     lengthString find = new char[0];
     lengthString replace = new char[0];
     cout << "Enter a string to find: ";
