@@ -76,7 +76,7 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
     int replaceLength = replaceText[0];
     int newLength = s_length + 1 + (replaceLength - targetLength);
     lengthString newS = new char[newLength];
-    bool match = false;
+    int matches = 0;
     for (int i = 1; i < s_length; i++)
     {
         if (s[i] == target[1])
@@ -84,16 +84,15 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
             cout << "first char match" << "\n";
             if (stringEqual(substring(s, i, targetLength), target))
             {
-                match = true;
+                matches++;
                 cout << "Target match" << "\n";
                 concatenate(newS, substring(s, 1, i - 1));
                 concatenate(newS, replaceText);
                 concatenate(newS, substring(s, i + targetLength, s_length));
-                break;
             }
         }
     }
-    if (!match)
+    if (matches == 0)
         concatenate(newS, s);
     delete[] s;
     s = newS;
