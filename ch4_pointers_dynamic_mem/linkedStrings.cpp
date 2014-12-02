@@ -15,25 +15,34 @@ struct stringNode {
     char c;
     stringNode *next;
 };
-typedef stringNode *string;
+typedef stringNode *string; //Use for head
 
 void append(string &s, char c);
+char characterAt(string s, int index);
 
 int main(int argc, char *argv[])
 {
     string s = NULL; //Head pointer to empty list
+
+    /*Test append()*/
     cout << "Enter a string: ";
     char inputChar = cin.get();
-    while (inputChar != 10) { //append input chars to s
+    while (inputChar != 10) { //Append input chars to s
         append(s, inputChar);
         inputChar = cin.get();
     }
     stringNode *loopPtr = s;
-    while (loopPtr != NULL) { //print s
+    while (loopPtr != NULL) { //Print s
         cout << loopPtr->c;
         loopPtr = loopPtr->next;
     }
     cout << "\n";
+
+    /*Test characterAt()*/
+    int position;
+    cout << "Enter a character position: ";
+    cin >> position;
+    cout << characterAt(s, position) << "\n";
 }
 
 void append(string &s, char c)
@@ -54,3 +63,21 @@ void append(string &s, char c)
         loopPtr = loopPtr->next;
     }
 }
+
+char characterAt(string s, int index)
+{
+    if (s == NULL) { //Empty list
+        return -1;
+    }
+    stringNode *loopPtr = s;
+    for (int i = 0; i <= index; i++) {
+        if (i == index) {
+            return loopPtr->c;
+        }
+        if (loopPtr->next == NULL) { //End of list
+            return -1;
+        }
+        loopPtr = loopPtr->next;
+    }
+}
+
