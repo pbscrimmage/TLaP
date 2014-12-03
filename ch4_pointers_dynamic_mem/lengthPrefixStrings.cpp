@@ -48,7 +48,7 @@ void concatenate(lengthString &s1, lengthString s2)
 bool stringEqual(lengthString s1, lengthString s2)
 {
     int s_length = s1[0];
-    for (int i = 1; i < s_length; i++)
+    for (int i = 1; i <= s_length; i++)
     {
         if (s1[i] != s2[i])
         {
@@ -74,25 +74,22 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
     int s_length = s[0];
     int targetLength = target[0];
     int replaceLength = replaceText[0];
-    int newLength = s_length + 1 + (replaceLength - targetLength);
-    lengthString newS = new char[newLength];
-    int matches = 0;
-    for (int i = 1; i < s_length; i++)
+    int newLength = s_length + (replaceLength - targetLength);
+    lengthString newS = new char[newLength]; //FIX: DO WITHIN LOOP
+    bool match = false;
+    for (int i = 1; i <= s_length; i++)
     {
         if (s[i] == target[1])
         {
-            cout << "first char match" << "\n";
             if (stringEqual(substring(s, i, targetLength), target))
             {
-                matches++;
-                cout << "Target match" << "\n";
                 concatenate(newS, substring(s, 1, i - 1));
                 concatenate(newS, replaceText);
-                concatenate(newS, substring(s, i + targetLength, s_length));
+                concatenate(newS, substring(s, i + targetLength, s_length - (i + 1)));
             }
         }
     }
-    if (matches == 0)
+    if (!match)
         concatenate(newS, s);
     delete[] s;
     s = newS;
