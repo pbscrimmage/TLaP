@@ -44,14 +44,16 @@ int main(int argc, char *argv[])
 {
     //Test append()
     cout << "**TESTING append**\n";
-    lengthString string1 = new char[0];
+    lengthString string1 = new char[1];
+    string1[0] = 0;
     cout << "Enter a string: ";
     input(string1);
     output(string1);
 
     //Test concatenate()
     cout << "**TESTING concatenate**\n";
-    lengthString string2 = new char[0];
+    lengthString string2 = new char[1];
+    string2[0] = 0;
     cout << "Enter another string: ";
     input(string2);
     output(string2);
@@ -65,8 +67,10 @@ int main(int argc, char *argv[])
 
     //Test replaceString()
     cout << "**TESTING replaceString**\n";
-    lengthString find = new char[0];
-    lengthString replace = new char[0];
+    lengthString find = new char[1];
+    find[0] = 0;
+    lengthString replace = new char[1];
+    replace[0] = 0;
     cout << "Enter a string to find: ";
     input(find);
     cout << "Replace with: ";
@@ -147,7 +151,7 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
  
             int newLength = s_length + (replaceLength - targetLength);
             /*Allocate and create new string*/
-            lengthString newS = new char[newLength];
+            lengthString newS = new char[newLength + 1];
             lengthString begin = substring(s, 1, i - 1);
             lengthString end = substring(s, i + targetLength, s_length - (i - 1 + targetLength));
             concatenate(newS, begin); //Original beginning
