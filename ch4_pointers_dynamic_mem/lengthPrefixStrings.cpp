@@ -33,7 +33,7 @@ void input(lengthString &s)
 }
 void output(lengthString s)
 {
-    int length = s[0];
+    int length = (int)s[0];
     for(int i = 1; i <= length; i++) {
         cout << s[i];
     }
@@ -77,6 +77,12 @@ int main(int argc, char *argv[])
     input(replace);
     replaceString(string1, find, replace);
     output(string1);
+
+    delete[] string1;
+    delete[] string2;
+    delete[] subString;
+    delete[] find;
+    delete[] replace;
     
     return 0;
 }
@@ -104,9 +110,9 @@ void append(lengthString &s, char c)
 
 void concatenate(lengthString &s1, lengthString s2)
 {
-    int s1_length = s1[0];
-    int s2_length = s2[0];
-    int newLength = s1_length + s2_length;
+    int s1_length = (int)s1[0];
+    int s2_length = (int)s2[0];
+    unsigned int newLength = s1_length + s2_length;
     lengthString newS = new char[newLength + 1];
     newS[0] = newLength;
     for (int i = 1; i <= s1_length; i++) {
@@ -146,8 +152,9 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
     int targetLength = target[0];
     int replaceLength = replaceText[0];
     for (int i = 1; i <= s_length; i++) {
+        lengthString matchString = substring(s, i, targetLength);
         if (s[i] == target[1] && 
-                stringEqual(substring(s, i, targetLength), target)) {
+                stringEqual(matchString, target)) {
  
             int newLength = s_length + (replaceLength - targetLength);
             /*Allocate and create new string*/
@@ -157,10 +164,13 @@ void replaceString(lengthString &s, lengthString target, lengthString replaceTex
             concatenate(newS, begin); //Original beginning
             concatenate(newS, replaceText); //Replace stuff
             concatenate(newS, end); //Original end
+            delete[] begin;
+            delete[] end;
             delete[] s;
             s = newS; 
             s_length = s[0]; //In case length was changed by replace
-        }
-    }
+        }//End if
+        delete[] matchString;
+    }//End for
 }
 
