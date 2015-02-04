@@ -14,15 +14,16 @@ using std::cout;
 
 typedef char *lengthString;
 
-void append(lengthString &s, char c);
-char characterAt(lengthString s, int position);
-void concatenate(lengthString &s1, lengthString s2);
-void replaceString(lengthString &s, lengthString target, lengthString replaceText);
-bool stringEqual(lengthString s1, lengthString s2);
-lengthString substring(lengthString s, int position, int length);
+void append(lengthString& s, char c);
+char characterAt(const lengthString& s, int position);
+void concatenate(lengthString &s1, const lengthString& s2);
+void replaceString(lengthString& s, const lengthString& target, 
+        const lengthString& replaceText);
+bool stringEqual(const lengthString& s1, const lengthString& s2);
+lengthString substring(const lengthString& s, int position, int length);
 
 
-void input(lengthString &s)
+void input(lengthString& s)
 {
 
     char inputChar = cin.get();
@@ -31,9 +32,9 @@ void input(lengthString &s)
         inputChar = cin.get(); 
     }
 }
-void output(lengthString s)
+void output(const lengthString& s)
 {
-    int length = (int)s[0];
+    char length = s[0];
     for(int i = 1; i <= length; i++) {
         cout << s[i];
     }
@@ -87,15 +88,15 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-char characterAt(lengthString s, int position)
+char characterAt(const lengthString& s, int position)
 {
     return s[position + 1];
 }
 
-void append(lengthString &s, char c)
+void append(lengthString& s, char c)
 {
-    int oldLength = s[0];
-    int newLength = oldLength + 1;
+    char oldLength = s[0];
+    char newLength = oldLength + 1;
     lengthString newS = new char[newLength + 1];
     newS[0] = newLength;
     for (int i = 1; i <= newLength; i++) {
@@ -108,11 +109,11 @@ void append(lengthString &s, char c)
     s = newS;
 }
 
-void concatenate(lengthString &s1, lengthString s2)
+void concatenate(lengthString& s1, const lengthString& s2)
 {
-    int s1_length = (int)s1[0];
-    int s2_length = (int)s2[0];
-    unsigned int newLength = s1_length + s2_length;
+    char s1_length = s1[0];
+    char s2_length = s2[0];
+    char newLength = s1_length + s2_length;
     lengthString newS = new char[newLength + 1];
     newS[0] = newLength;
     for (int i = 1; i <= s1_length; i++) {
@@ -125,9 +126,9 @@ void concatenate(lengthString &s1, lengthString s2)
     s1 = newS;
 }
 
-bool stringEqual(lengthString s1, lengthString s2)
+bool stringEqual(const lengthString& s1, const lengthString& s2)
 {
-    int s_length = s1[0];
+    char s_length = s1[0];
     for (int i = 1; i <= s_length; i++) {
         if (s1[i] != s2[i]) {
             return false;
@@ -136,7 +137,7 @@ bool stringEqual(lengthString s1, lengthString s2)
     return true;
 }
 
-lengthString substring(lengthString s, int position, int length)
+lengthString substring(const lengthString& s, int position, int length)
 {
     lengthString sub = new char[length + 1];
     sub[0] = length;
@@ -146,17 +147,18 @@ lengthString substring(lengthString s, int position, int length)
     return sub;
 }
 /*Problems when replace < target*/
-void replaceString(lengthString &s, lengthString target, lengthString replaceText)
+void replaceString(lengthString &s, const lengthString& target, 
+        const lengthString& replaceText)
 {
-    int s_length = s[0];
-    int targetLength = target[0];
-    int replaceLength = replaceText[0];
+    char s_length = s[0];
+    char targetLength = target[0];
+    char replaceLength = replaceText[0];
     for (int i = 1; i <= s_length; i++) {
         lengthString matchString = substring(s, i, targetLength);
         if (s[i] == target[1] && 
                 stringEqual(matchString, target)) {
  
-            int newLength = s_length + (replaceLength - targetLength);
+            char newLength = s_length + (replaceLength - targetLength);
             /*Allocate and create new string*/
             lengthString newS = new char[newLength + 1];
             lengthString begin = substring(s, 1, i - 1);
