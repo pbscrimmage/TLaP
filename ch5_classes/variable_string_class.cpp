@@ -1,3 +1,15 @@
+/**
+ * variable_string_class.cpp
+ *
+ * Author: Patrick Rummage
+ *          [patrickbrummage@gmail.com]
+ *
+ * Objective:
+ *      Create a class to implement variable-length string
+ *      arrays, along with constructors, destructors, an 
+ *      overloaded assignment operator and the methods
+ *      length(), append(), concatenate(), and remove().
+ */
 #include <iostream>
 
 using namespace std;
@@ -10,6 +22,7 @@ class VarString {
         int length() const;
         void append(char c);
         void concatenate(const VarString& s2);
+        void remove(int pos, int count);
         char operator[](int pos) const;
         VarString& operator=(const VarString& rhs);
     private:
@@ -82,6 +95,22 @@ void VarString::concatenate(const VarString& s2)
     _s = newS;
 }
 
+void VarString::remove(int pos, int count)
+{
+    int new_length = (this->length() - count) + 1;
+    string newS = new char[new_length];
+    int i = 0;
+    for (int j = 0; j <= this->length(); j++) {
+        if (j < pos || j >= pos + count) {
+            newS[i] = _s[j];
+            i++;
+        }
+    }
+    newS[new_length] = 0;
+    delete[] _s;
+    _s = newS;    
+}
+
 VarString& VarString::operator=(const VarString& rhs)
 {   
     int length = rhs.length() + 1;
@@ -91,7 +120,6 @@ VarString& VarString::operator=(const VarString& rhs)
     }
     copy[length] = 0;
     _s = copy;
-    delete[] copy;
     
     return *this;
 }
@@ -111,12 +139,20 @@ VarString::~VarString()
 
 int main()
 {   //Test all methods
-    VarString s1("This is a variable string");
+    VarString s1("This is a string");
     VarString s2;
+    VarString s3;
+
     s2.concatenate(s1);
+    s2.remove(2, 2);
+    
+    s3 = s1;
+    s3.append('!');
 
     cout << s1 << '\n';
+    cout << s1[2] << '\n';
     cout << s2 << '\n';
+    cout << s3 << '\n';
     
     return 0;
 }
