@@ -22,7 +22,7 @@ class variableString {
         char characterAt(int pos) { return _s[pos]; }
         int getlength() { return _length; }
         void append(char c);
-        void concatenate(const variableString& s2);
+        void concatenate(variableString& s2);
         void remove(int start, int end);
 
     private:
@@ -66,13 +66,36 @@ void variableString::append(char c) {
 }
 
 //--------------------------------------------------------
-void variableString::concatenate(const variableString& s2) {
-
+void variableString::concatenate(variableString& s2) {
+    int newlength = _length + s2.getlength();
+    char* newS = new char[newlength + 1];
+    for (int i = 0; i < _length; i++) {
+        newS[i] = _s[i]; // copy first part
+    }
+    char* end = s2.getstring();
+    for (int j = _length, k = 0; j < newlength; j++, k++) {
+        newS[j] = end[k]; // copy second part
+    }
+    newS[newlength] = 0;
+    delete[] _s;
+    _s = newS;
+    _length = newlength;
 }
 
 //--------------------------------------------------------
-void variableString::remove(int start, int end) {
-
+void variableString::remove(int start, int delnum) {
+    int newlength = _length - delnum;
+    char* newS = new char[newlength]; 
+    for (int i = 0, j = 0; i < _length; i++) {
+        if (i < start || i >= start + delnum) {
+            newS[j] = _s[i];
+            j++;
+        }
+    }
+    newS[newlength] = 0;
+    delete[] _s;
+    _s = newS;
+    _length = newlength;
 }
 
 //--------------------------------------------------------
@@ -90,11 +113,23 @@ int main(int argc, char* argv[]) {
 
     //Test initializer
     variableString s1{"test string"};
-    cout << s1.getlength() << '\n';
+    cout << "===Testing Initializer===" << '\n';
     cout << s1 << '\n';
 
     //Test append
+    cout << "===Testing Append===" << '\n';
     s1.append('!');
+    cout << s1 << '\n';
+
+    //Test concatenate
+    variableString s2{"new ending"};
+    cout << "===Testing Concatenate===" << '\n';
+    s1.concatenate(s2);
+    cout << s1 << '\n';
+
+    //Test remove
+    cout << "===Testing Remove===" << '\n';
+    s1.remove(12,3);
     cout << s1 << '\n';
 
     return 0;
