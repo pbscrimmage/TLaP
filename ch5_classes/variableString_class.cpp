@@ -18,6 +18,7 @@ class variableString {
         ~variableString();
         variableString(const char* s);
 
+        char* getstring() { return _s; }
         char characterAt(int pos) { return _s[pos]; }
         int getlength() { return _length; }
         void append(char c);
@@ -79,15 +80,22 @@ variableString::~variableString() {
     delete[] _s;
 }
 
+std::ostream& operator<<(std::ostream& ost, variableString& s) {
+    char* ptr = s.getstring();
+    ost << ptr;
+    return ost;
+}
 
 int main(int argc, char* argv[]) {
 
     //Test initializer
     variableString s1{"test string"};
+    cout << s1.getlength() << '\n';
+    cout << s1 << '\n';
 
     //Test append
     s1.append('!');
+    cout << s1 << '\n';
 
     return 0;
 }
-
