@@ -9,19 +9,19 @@
  *      and to return the char at a given position.
  */
 #include <iostream>
-#include <string>
-using namespace std;
+using std::cin;
+using std::cout;
 
 class variableString {
     public:
         variableString();
         ~variableString();
-        variableString(const string& s2);
+        variableString(const char* s);
 
         char characterAt(int pos) { return _s[pos]; }
         int getlength() { return _length; }
         void append(char c);
-        void concatenate(const variableString& s);
+        void concatenate(const variableString& s2);
         void remove(int start, int end);
 
     private:
@@ -36,8 +36,13 @@ variableString::variableString() {
 }
 
 //--------------------------------------------------------
-variableString::variableString(const string& s) {
-    int strlen = s.length();
+variableString::variableString(const char* s) {
+    int strlen = 0;
+    int i = 0;
+    while (s[i] != 0){
+        strlen++;
+        i++;
+    }
     _s = new char[strlen + 1]; // extra space for null
     for (int i = 0; i < strlen; i++){
         _s[i] = s[i];
@@ -73,3 +78,16 @@ void variableString::remove(int start, int end) {
 variableString::~variableString() {
     delete[] _s;
 }
+
+
+int main(int argc, char* argv[]) {
+
+    //Test initializer
+    variableString s1{"test string"};
+
+    //Test append
+    s1.append('!');
+
+    return 0;
+}
+
