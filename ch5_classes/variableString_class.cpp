@@ -18,12 +18,14 @@ class variableString {
         ~variableString();
         variableString(const char* s);
 
-        char* getstring() { return _s; }
-        char characterAt(int pos) { return _s[pos]; }
-        int getlength() { return _length; }
+        char* getptr() const { return _s; }
+        int getlength() const { return _length; }
         void append(char c);
-        void concatenate(variableString& s2);
+        void concatenate(const variableString& s2);
         void remove(int start, int end);
+
+        variableString& operator=(const variableString& rhs);
+        char operator[](int pos) const;
 
     private:
         char * _s; // pointer to beginning of array
@@ -32,7 +34,7 @@ class variableString {
 
 //--------------------------------------------------------
 variableString::variableString() {
-    _s = NULL;
+    _s = new char[1] {0};
     _length = 0;
 }
 
@@ -66,13 +68,13 @@ void variableString::append(char c) {
 }
 
 //--------------------------------------------------------
-void variableString::concatenate(variableString& s2) {
+void variableString::concatenate(const variableString& s2) {
     int newlength = _length + s2.getlength();
     char* newS = new char[newlength + 1];
     for (int i = 0; i < _length; i++) {
         newS[i] = _s[i]; // copy first part
     }
-    char* end = s2.getstring();
+    char* end = s2.getptr();
     for (int j = _length, k = 0; j < newlength; j++, k++) {
         newS[j] = end[k]; // copy second part
     }
@@ -103,34 +105,66 @@ variableString::~variableString() {
     delete[] _s;
 }
 
-std::ostream& operator<<(std::ostream& ost, variableString& s) {
-    char* ptr = s.getstring();
+//-------------------------------------------------------
+char variableString::operator[](int pos) const {
+    return _s[pos];
+}
+
+
+//--------------------------------------------------------
+variableString& variableString::operator=(const variableString& rhs) {
+    int length = rhs.getlength();
+    char* copy = new char[length + 1];
+    char* ptr = rhs.getptr();
+    for (int i = 0; i < length; i++) {
+        copy[i] = ptr[i];
+    }
+    copy[length] = 0;
+    delete[] _s;
+    _s = copy;
+    
+    return *this;
+}
+
+//---------------------------------------------------------
+std::ostream& operator<<(std::ostream& ost, const variableString& s) {
+    char* ptr = s.getptr();
     ost << ptr;
     return ost;
 }
 
+//---------------------------------------------------------
 int main(int argc, char* argv[]) {
 
     //Test initializer
     variableString s1{"test string"};
     cout << "===Testing Initializer===" << '\n';
-    cout << s1 << '\n';
+    cout << s1 << "\n\n";
 
     //Test append
     cout << "===Testing Append===" << '\n';
     s1.append('!');
-    cout << s1 << '\n';
+    cout << s1 << "\n\n";
 
     //Test concatenate
     variableString s2{"new ending"};
     cout << "===Testing Concatenate===" << '\n';
     s1.concatenate(s2);
-    cout << s1 << '\n';
+    cout << s1 << "\n\n";
+
+    //Test index operator
+    cout << "===Testing [] operator===" << '\n';
+    cout << s1[11] << "\n\n";
 
     //Test remove
     cout << "===Testing Remove===" << '\n';
     s1.remove(12,3);
-    cout << s1 << '\n';
+    cout << s1 << "\n\n";
+
+    //Test deep copy
+    cout << "===Testing Deep Copy===" << '\n';
+    variableString s3 = s1;
+    cout << s3 << '\n';
 
     return 0;
 }
