@@ -28,6 +28,7 @@ class studentCollection {
         ~studentCollection();
         void addRecord(studentRecord newStudent);
         studentRecord recordWithNumber(int idNum);
+        studentCollection recordsWithinRange(int low, int high);
         void removeRecord(int idNum);
         studentNode* copiedList(const studentNode* original);
         studentCollection& operator=(const studentCollection& rhs);
@@ -85,6 +86,20 @@ void studentCollection::deleteList(studentNode* &listPtr) {
         listPtr = listPtr->next;
         delete temp;
     }
+}
+
+studentCollection studentCollection::recordsWithinRange(int low, int high) {
+    studentCollection newCollection;
+    studentNode* listPtr = _listHead;
+    int studentGrade;
+    while (listPtr != NULL) {
+        studentGrade = listPtr->studentData.grade; 
+        if (studentGrade >= low && studentGrade <= high) {
+           newCollection.addRecord(listPtr->studentData); 
+        }
+        listPtr = listPtr->next;
+    }
+    return newCollection;
 }
 
 studentCollection::studentNode*
