@@ -26,6 +26,7 @@ class studentCollection {
     public:
         studentCollection();
         ~studentCollection();
+        void printList() const;
         void addRecord(studentRecord newStudent);
         studentRecord recordWithNumber(int idNum);
         double averageRecord();
@@ -41,6 +42,15 @@ class studentCollection {
 
 studentCollection::studentCollection() {
     _listHead = NULL;
+}
+
+void studentCollection::printList() const {
+    studentNode* listPtr = _listHead;
+    while (listPtr != NULL) {
+        cout << listPtr->studentData.studentID << ", " << listPtr->studentData.grade <<
+            ", " << listPtr->studentData.name << '\n';
+        listPtr = listPtr->next;
+    }
 }
 
 void studentCollection::addRecord(studentRecord newStudent) {
@@ -150,6 +160,13 @@ studentCollection& studentCollection::operator=(const studentCollection& rhs) {
     return *this;
 }
 
+//-----------------------------------------------------------------------------
+std::ostream& operator<<(std::ostream& ost, const studentCollection& sc) {
+    sc.printList();
+    
+    return ost;
+}
+
 int main (int argc, char* argv[]) {
     studentCollection collection1;
     collection1.addRecord(studentRecord{0,100,"Peace"});
@@ -162,6 +179,8 @@ int main (int argc, char* argv[]) {
     double average2 = collection2.averageRecord();
     cout << average << '\n';
     cout << average2 << '\n';
+
+    cout << collection2 << '\n';
 
     return 0;
 }
