@@ -46,7 +46,7 @@ studentCollection::studentCollection() {
 void studentCollection::addRecord(studentRecord newStudent) {
     studentNode* newNode = new studentNode;
     newNode->studentData = newStudent;
-    newNode->next = _listHead; // previous first item
+    newNode->next = _listHead; // Previous first item
     _listHead = newNode;
 }
 
@@ -151,6 +151,17 @@ studentCollection& studentCollection::operator=(const studentCollection& rhs) {
 }
 
 int main (int argc, char* argv[]) {
+    studentCollection collection1;
+    collection1.addRecord(studentRecord{0,100,"Peace"});
+    collection1.addRecord(studentRecord{1,50,"Scrimbles"});
+
+    studentCollection collection2 = collection1;
+    collection2.addRecord(studentRecord{2,25,"Grizzabella"});
+
+    double average = collection1.averageRecord();
+    double average2 = collection2.averageRecord();
+    cout << average << '\n';
+    cout << average2 << '\n';
 
     return 0;
 }
