@@ -7,13 +7,15 @@
  *
  */
 #include <iostream>
+#include <string>
 using std::cin;
 using std::cout;
+using std::string;
 
 struct studentRecord {
     int studentID;
     int grade;
-    char* name;
+    string name;
 };
 
 class studentCollection {
@@ -40,12 +42,17 @@ class studentCollection {
         void deleteList(studentNode* &listPtr);
 };
 
+//-----------------------------------------------------------------------------
 studentCollection::studentCollection() {
     _listHead = NULL;
 }
 
+//-----------------------------------------------------------------------------
 void studentCollection::printList() const {
     studentNode* listPtr = _listHead;
+    if (listPtr == NULL) {
+        cout << "(Empty List)";
+    }
     while (listPtr != NULL) {
         cout << listPtr->studentData.studentID << ", " << listPtr->studentData.grade <<
             ", " << listPtr->studentData.name << '\n';
@@ -53,6 +60,7 @@ void studentCollection::printList() const {
     }
 }
 
+//-----------------------------------------------------------------------------
 void studentCollection::addRecord(studentRecord newStudent) {
     studentNode* newNode = new studentNode;
     newNode->studentData = newStudent;
@@ -60,6 +68,7 @@ void studentCollection::addRecord(studentRecord newStudent) {
     _listHead = newNode;
 }
 
+//-----------------------------------------------------------------------------
 studentRecord studentCollection::recordWithNumber(int idNum) {
     studentNode* loopPtr = _listHead;
     while (loopPtr != NULL && loopPtr->studentData.studentID != idNum) {
@@ -73,6 +82,7 @@ studentRecord studentCollection::recordWithNumber(int idNum) {
     }
 }
 
+//-----------------------------------------------------------------------------
 double studentCollection::averageRecord() {
     if (_listHead == NULL) { // Handle empty list
         return 0;
@@ -89,6 +99,7 @@ double studentCollection::averageRecord() {
     return average;
 }
 
+//-----------------------------------------------------------------------------
 void studentCollection::removeRecord(int idNum) {
     studentNode* loopPtr = _listHead;
     studentNode* previous = NULL;
@@ -107,6 +118,7 @@ void studentCollection::removeRecord(int idNum) {
     delete loopPtr;
 }
 
+//-----------------------------------------------------------------------------
 void studentCollection::deleteList(studentNode* &listPtr) {
     while (listPtr != NULL) {
         studentNode* temp = listPtr;
@@ -115,6 +127,7 @@ void studentCollection::deleteList(studentNode* &listPtr) {
     }
 }
 
+//-----------------------------------------------------------------------------
 studentCollection studentCollection::recordsWithinRange(int low, int high) {
     studentCollection newCollection;
     studentNode* listPtr = _listHead;
@@ -129,6 +142,7 @@ studentCollection studentCollection::recordsWithinRange(int low, int high) {
     return newCollection;
 }
 
+//-----------------------------------------------------------------------------
 studentCollection::studentNode*
 studentCollection::copiedList(const studentNode* original) {
     if (original == NULL) {
@@ -148,10 +162,12 @@ studentCollection::copiedList(const studentNode* original) {
     return newList;
 }
 
+//-----------------------------------------------------------------------------
 studentCollection::~studentCollection() {
     deleteList(_listHead);
 }
 
+//-----------------------------------------------------------------------------
 studentCollection& studentCollection::operator=(const studentCollection& rhs) {
     if (this != &rhs) {
         deleteList(_listHead);
@@ -174,6 +190,14 @@ int main (int argc, char* argv[]) {
 
     studentCollection collection2 = collection1;
     collection2.addRecord(studentRecord{2,25,"Grizzabella"});
+    collection2.addRecord(studentRecord{3,90,"Socrates"});
+    collection2.addRecord(studentRecord{4,89,"Wizard"});
+
+    studentCollection collection3 = collection2.recordsWithinRange(90,100);
+    studentCollection collection4 = collection2.recordsWithinRange(0,20);
+
+    studentRecord s1 = collection2.recordWithNumber(3);
+    cout << "Record #3: " << s1.name << '\n';
 
     double average = collection1.averageRecord();
     double average2 = collection2.averageRecord();
@@ -181,6 +205,11 @@ int main (int argc, char* argv[]) {
     cout << average2 << '\n';
 
     cout << collection2 << '\n';
+    cout << collection3 << '\n';
+    cout << collection4 << '\n';
+
+    collection2.removeRecord(3);
+    cout << '\n' << collection2 << '\n';
 
     return 0;
 }
