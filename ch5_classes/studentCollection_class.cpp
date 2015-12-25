@@ -13,7 +13,7 @@ using std::cout;
 struct studentRecord {
     int studentID;
     int grade;
-    char[] Name;
+    char* name;
 };
 
 class studentCollection {
@@ -29,17 +29,19 @@ class studentCollection {
         void addRecord(studentRecord newStudent);
         studentRecord recordWithNumber(int idNum);
         void removeRecord(int idNum);
+        studentNode* copiedList(const studentNode* original);
+        studentCollection& operator=(const studentCollection& rhs);
 
     private:
         studentNode* _listHead;
-        void deleteList(studentList &listPtr);
+        void deleteList(studentNode* &listPtr);
 };
 
 studentCollection::studentCollection() {
     _listHead = NULL;
 }
 
-void studentCollection::addrecord(studentRecord newStudent) {
+void studentCollection::addRecord(studentRecord newStudent) {
     studentNode* newNode = new studentNode;
     newNode->studentData = newStudent;
     newNode->next = _listHead; // previous first item
@@ -48,11 +50,11 @@ void studentCollection::addrecord(studentRecord newStudent) {
 
 studentRecord studentCollection::recordWithNumber(int idNum) {
     studentNode* loopPtr = _listHead;
-    while (loopPtr != NULL && loopPtr->studentData.student.studentID != idNum) {
+    while (loopPtr != NULL && loopPtr->studentData.studentID != idNum) {
         loopPtr = loopPtr->next;
     }
     if (loopPtr == NULL) {
-        studentRecord dummyRecord(-1,-1,"");
+        studentRecord dummyRecord{-1,-1,"VOID"};
         return dummyRecord;
     } else {
         return loopPtr->studentData;
@@ -77,7 +79,7 @@ void studentCollection::removeRecord(int idNum) {
     delete loopPtr;
 }
 
-void studentCollection::deleteList(studentList &listPtr) {
+void studentCollection::deleteList(studentNode* &listPtr) {
     while (listPtr != NULL) {
         studentNode* temp = listPtr;
         listPtr = listPtr->next;
@@ -85,6 +87,38 @@ void studentCollection::deleteList(studentList &listPtr) {
     }
 }
 
+studentCollection::studentNode*
+studentCollection::copiedList(const studentNode* original) {
+    if (original == NULL) {
+        return NULL;
+    }
+    studentNode* newList = new studentNode;
+    newList->studentData = original->studentData;
+    studentNode* oldLoopPtr = original->next;
+    studentNode* newLoopPtr = newList;
+    while(oldLoopPtr != NULL) {
+        newLoopPtr->next = new studentNode;
+        newLoopPtr = newLoopPtr->next;
+        newLoopPtr->studentData = oldLoopPtr->studentData;
+        oldLoopPtr = oldLoopPtr->next;
+    }
+    newLoopPtr->next = NULL;
+    return newList;
+}
+
 studentCollection::~studentCollection() {
     deleteList(_listHead);
+}
+
+studentCollection& studentCollection::operator=(const studentCollection& rhs) {
+    if (this != &rhs) {
+        deleteList(_listHead);
+        _listHead = copiedList(rhs._listHead);
+    }
+    return *this;
+}
+
+int main (int argc, char* argv[]) {
+
+    return 0;
 }
