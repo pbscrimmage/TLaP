@@ -28,6 +28,7 @@ class studentCollection {
         ~studentCollection();
         void addRecord(studentRecord newStudent);
         studentRecord recordWithNumber(int idNum);
+        double averageRecord();
         studentCollection recordsWithinRange(int low, int high);
         void removeRecord(int idNum);
         studentNode* copiedList(const studentNode* original);
@@ -60,6 +61,22 @@ studentRecord studentCollection::recordWithNumber(int idNum) {
     } else {
         return loopPtr->studentData;
     }
+}
+
+double studentCollection::averageRecord() {
+    if (_listHead == NULL) { // Handle empty list
+        return 0;
+    }
+    int count = 0;
+    int sum = 0;
+    studentNode* listPtr = _listHead;
+    while (listPtr != NULL) {
+       sum += listPtr->studentData.grade;
+       count++;
+       listPtr = listPtr->next;
+    }
+    double average = sum / count; 
+    return average;
 }
 
 void studentCollection::removeRecord(int idNum) {
