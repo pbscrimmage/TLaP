@@ -4,7 +4,14 @@
  * Author: Patrick Rummage <patrickbrummage@gmail.com>
  *
  * Objective:
- *
+ *      Create a studentCollection class to store student records as a linked
+ *      list with appropriate constructor, destructor, and assignment operator,
+ *      as well as methods to:
+ *          Add and delete nodes
+ *          Return a record given a student ID#
+ *          Average all grades in the records in the list
+ *          Return a new studentCollection object with a list of all records
+ *              containing grades in a given range
  */
 #include <iostream>
 #include <string>
