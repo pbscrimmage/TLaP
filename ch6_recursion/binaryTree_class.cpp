@@ -6,6 +6,8 @@
  */
 #include <iostream>
 #include <vector>
+#include <exception>
+#include <string>
 using std::cin;
 using std::cout;
 using std::vector;
@@ -29,6 +31,7 @@ class binaryTree {
         };
         treeNode* _root;
         void insertNode(int n, treeNode* treePtr);
+        bool checkNodes(int n, treeNode* treePtr); // Helper function for isSearchTree
 };
 
 //-----------------------------------------------------------------------------
@@ -45,17 +48,58 @@ binaryTree::binaryTree(vector<int> numbers) {
 
 //-----------------------------------------------------------------------------
 void binaryTree::insertNode(int n, treeNode* treePtr) {
-    if (treePtr == NULL) {
-        treePtr = new treeNode{n,NULL,NULL};
+    treeNode* newNode = new treeNode{n,NULL,NULL};
+    newNode->left = _root; 
+    _root = newNode;
+}
+
+//-----------------------------------------------------------------------------
+bool binaryTree::isSearchTree() {
+    if (_root == NULL) {
+        return false;
     } else {
-        if (n <= treePtr->data) {
-            insertNode(n, treePtr->left);
-        } else {
-            insertNode(n, treePtr->right);
-        }
+        return checkNodes(_root->data, _root);
     }
 }
 
+//-----------------------------------------------------------------------------
+bool binaryTree::checkNodes(int n, treeNode* treePtr) {
+    bool passTest = false;
+    bool checkLeft = false;
+    bool checkRight = false;
+
+    if (treePtr == NULL) {
+        passTest = false;
+    }
+    treeNode* left = NULL;
+    treeNode* right = NULL;
+
+    if (left == NULL && right == NULL) {
+        passTest = true;
+        
+    }
+    if (left != NULL ) {
+        left = treePtr->left;
+        if (left->data > n) {
+            passTest = false; 
+        }
+    } else if (right != NULL ) {
+        right = treePtr->right;
+        if (right->data <= n) {
+            passTest  = false;
+        }
+    }
+    if (passTest) {
+        if (left != NULL) {
+            checkLeft = checkNodes(treePtr->data, treePtr->left);
+        }
+        if (right != NULL) {
+            checkRight = checkNodes(treePtr->data, treePtr->right);
+        }
+    }
+    return checkLeft && checkRight;
+}
+    
 //-----------------------------------------------------------------------------
 binaryTree::~binaryTree() {
 
@@ -63,8 +107,17 @@ binaryTree::~binaryTree() {
 
 int main(int argc, char* argv[]) {
     
-    vector<int> testvals{0,1,2,3,4,5,6,7,8,9,10};
-    binaryTree bt{testvals};
+    
+    try {
+        vector<int> testvals{0,1,2,3,4,5,6,7,8,9,10};
+        binaryTree bt{testvals};
+
+        bool dididoitrite = bt.isSearchTree();
+        cout << dididoitrite << '\n';
+    }
+    catch (const std::exception& e) {
+        cout << e.what();
+    }
 
     return 0;
 }
