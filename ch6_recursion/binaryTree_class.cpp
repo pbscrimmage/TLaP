@@ -31,7 +31,7 @@ class binaryTree {
         };
         treeNode* _root;
         void insertNode(int n, treeNode* treePtr);
-        bool checkNodes(int n, treeNode* treePtr); // Helper function for isSearchTree
+        bool checkNodes(treeNode* treePtr); // Helper function for isSearchTree
 };
 
 //-----------------------------------------------------------------------------
@@ -58,44 +58,34 @@ bool binaryTree::isSearchTree() {
     if (_root == NULL) {
         return false;
     } else {
-        return checkNodes(_root->data, _root);
+        return checkNodes(_root);
     }
 }
 
 //-----------------------------------------------------------------------------
-bool binaryTree::checkNodes(int n, treeNode* treePtr) {
-    bool passTest = false;
+bool binaryTree::checkNodes(treeNode* treePtr) {
     bool checkLeft = false;
     bool checkRight = false;
 
-    if (treePtr == NULL) {
-        passTest = false;
+    if (treePtr == NULL) { // Empty tree
+        return false;
     }
-    treeNode* left = NULL;
-    treeNode* right = NULL;
+    treeNode* left = treePtr->left;
+    treeNode* right = treePtr->right;
 
-    if (left == NULL && right == NULL) {
-        passTest = true;
-        
+    if (left == NULL && right == NULL) { // Made it to end node
+        return true;
     }
-    if (left != NULL ) {
-        left = treePtr->left;
-        if (left->data > n) {
-            passTest = false; 
-        }
-    } else if (right != NULL ) {
-        right = treePtr->right;
-        if (right->data <= n) {
-            passTest  = false;
-        }
+    if (left != NULL && left->data > treePtr->data) {
+        return false; 
+    } else if (right != NULL && right->data <= treePtr->data) {
+        return false;
     }
-    if (passTest) {
-        if (left != NULL) {
-            checkLeft = checkNodes(treePtr->data, treePtr->left);
-        }
-        if (right != NULL) {
-            checkRight = checkNodes(treePtr->data, treePtr->right);
-        }
+    if (left != NULL) {
+        checkLeft = checkNodes(treePtr->left);
+    }
+    if (right != NULL) {
+        checkRight = checkNodes(treePtr->right);
     }
     return checkLeft && checkRight;
 }
